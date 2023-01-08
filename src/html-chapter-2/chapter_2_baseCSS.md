@@ -18,12 +18,13 @@
   - word-wrap（长的、不可分割的单词，强制换行）：break-word
   - text-shadow: 水平阴影 垂直阴影 模糊距离 阴影颜色
   - font-face: 定义自己的字体
-  >> 不理解
+    > > 不理解
   - border-radius（设置元素圆角）: 左上 右上 右下 左下
-  - border-image: url(图片地址)  width height 填充方式
+  - border-image: url(图片地址) width height 填充方式
   - box-shadow（盒子阴影）: 水平偏移量 垂直偏移量 模糊半径 颜色
-  - 媒体查询: 定义多套css样式，对于不同的媒体设备使用不同的css样式
-- 使用CSS实现一个三角形
+  - 媒体查询: 定义多套 css 样式，对于不同的媒体设备使用不同的 css 样式
+- 使用 CSS 实现一个三角形
+
 ```css
   width:0px;
   height:0px;

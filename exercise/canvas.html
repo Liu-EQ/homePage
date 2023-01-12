@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .div1 {
+        width: 100px;
+        height: 100px;
+        background-color: rgba(120, 230, 221, 0.2);
+      }
+      .div2 {
+        width: 200px;
+        height: 200px;
+        background-color: rgba(120, 0, 221, 0.3);
+      }
+      .div3 {
+        width: 300px;
+        height: 300px;
+        background-color: rgba(120, 230, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="target">
+      <div class="div1">canvas1</div>
+      <div class="div2">canvas2</div>
+      <div class="div3">canvas3</div>
+    </div>
+    <!-- <button onclick="dom2base64(document.getElementById('container'))"> -->
+    <button id="btn1">DOM -> Canvas</button>
+    <canvas id="canvas"></canvas>
+    <script>
+      // const targetDom = document.querySelector("#target")
+      // const canvas = document.querySelector("#canvas")
+      // const context = canvas.getContext("2d")
+
+      // // 非递归、深度优先遍历
+      // const DFSDomTraversal = root => {
+      //   if (!root) return;
+
+      //   const arr = [],
+      //     queue = [root];
+      //   let node = queue.shift();
+
+      //   while (node) {
+      //     arr.push(node);
+      //     if (node.children.length) {
+      //       for (let i = node.children.length - 1; i >= 0; i--) {
+      //         queue.unshift(node.children[i]);
+      //       }
+      //     }
+
+      //     node = queue.shift();
+      //   }
+
+      //   return arr;
+      // };
+
+      // // 凡是要复制的样式，都写在这
+      // const CSSRules = ["color", "border", "width", "height","background-color","margin-right"];
+
+      // const copyStyle = element => {
+      //   const styles = getComputedStyle(element);
+
+      //   CSSRules.forEach(rule => {
+      //     element.style.setProperty(rule, styles.getPropertyValue(rule));
+      //   });
+      // };
+
+      // // 处理图像资源
+      // const img2base64 = element => {
+      //   return new Promise((resolve, reject) => {
+      //     const img = new Image();
+
+      //     // 处理 canvas 受污染的情况
+      //     img.crossOrigin = "anonymous";
+
+      //     img.onerror = reject;
+      //     img.onload = function() {
+      //       const canvas = document.createElement("canvas");
+      //       const ctx = canvas.getContext("2d");
+
+      //       canvas.width = this.naturalWidth;
+      //       canvas.height = this.naturalHeight;
+      //       ctx.drawImage(this, 0, 0);
+      //       resolve(canvas.toDataURL());
+      //     };
+
+      //     img.src = element.src;
+      //   });
+      // };
+
+      // // 序列化Dom
+      // let XHTML = new XMLSerializer().serializeToString(target);
+
+      // const SVGDomElement = `<svg xmlns="http://www.w3.org/2000/svg" height="${height || 100}" width="${width || 100}">
+      //                             <foreignObject height="100%" width="100%">${XHTML}</foreignObject>
+      //                         </svg>`;
+      // // main
+      // const dom2base64 = async target => {
+      // debugger
+      // console.log('dom2base64')
+      // DFSDomTraversal(target).forEach(copyStyle);
+
+      // const imgElements = [...target.querySelectorAll("img")];
+
+      // const base64Result = await Promise.all(imgElements.map(img2base64));
+
+      // const width = target.offsetWidth;
+      // const height = target.offsetHeight;
+      // let XHTML = new XMLSerializer().serializeToString(target);
+
+      // imgElements.forEach((element, index) => {
+      //   XHTML = XHTML.replace(element.src, base64Result[index]);
+      // });
+
+      // const SVGDomElement = `<svg xmlns="http://www.w3.org/2000/svg" height="${height}" width="${width}">
+      //                           <foreignObject height="100%" width="100%">${XHTML}</foreignObject>
+      //                       </svg>`;
+
+      // const canvas = document.createElement("canvas");
+      // const ctx = canvas.getContext("2d");
+
+      // canvas.width = width;
+      // canvas.height = height;
+
+      // const img = new Image();
+
+      // img.onload = function() {
+      //   ctx.drawImage(this, 0, 0);
+
+      //   document.body.appendChild(canvas);
+      // };
+
+      // img.src = `data:image/svg+xml,${SVGDomElement}`;
+      // };
+
+      // const clickHandler = ()=>{
+      //   const promiseExercise = new Promise((resolve,reject)=>{
+      //   setTimeout(()=>{
+      //     console.log('xxxxx')
+      //     resolve('reslove-then')
+      //   },100)
+      //   return new  Promise()
+      // }).then((str)=>{
+      //   console.log('then',str)
+      // }).catch((str)=>{
+      //   console.log('catch',str)
+      // })
+      // }
+
+      function runAsync() {
+        var p = new Promise(function (resolve, reject) {
+          //做一些异步操作
+          setTimeout(function () {
+            console.log("执行完成");
+            resolve("数据");
+          }, 2000);
+        });
+        return p;
+      }
+
+      const btn1 = document.querySelector("#btn1");
+      btn1.addEventListener("click", runAsync);
+    </script>
+  </body>
+</html>

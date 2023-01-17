@@ -46,6 +46,11 @@
 
 - git revert <commit id>: git 会生成一个新的 commit，将指定的 commit 内容从当前分支上撤除
 
+## git 删除分支
+
+git branch -d 分支名
+git push origin -d 分支名
+
 ## 基础知识：
 
 - merge 之前 git pull

@@ -63,28 +63,59 @@
 - 不会改变原数组的方法(8 个)
   > > ES5:slice()、join()、toLocaleString()、toString()、concat()、indexOf()、lastIndexOf()、
   > > ES7: includes()
-  - slice()
-  - join()
-  - toLocaleString()
-  - toString()
-  - concta()
-  - indexOf()
-  - lastIndexOf()
-  - includes()
+  - slice(begin,end):浅拷贝数组元素，两个参数都是可选，默认是从 0 到数组末尾，两者都接受负值，表示从数组末尾进行对应的浅复制
+    > > 注意这个是浅复制，可能会存在更改原数组的赋值情况
+  - join(str):将数组中的各个元素通过指定的字符串进行拼接，使之形成一个字符串，str 默认参数为逗号
+    > > 如果是多维数组，会嵌套调用 join 方法，如果数组元素是对象，则会返回[object Object]字符串
+  - toLocaleString():首先是数组中的每个元素调用自身的 toLocaleString()方法将自身转换为字符串之后，再调用数组的 join 方法，将整个数组转换成为一个字符串
+  - toString():不推荐使用，与 join 方法功能相同
+    > > 当数组和字符串进行操作时，会调用这个方法对于数组进行转换
+  - concta(arrX,...,arrX):合并数组，参数可以是一个数组对象，也可以是一个数组，最少需要有一个参数
+    > > 可以使用 ... 扩展运算符对于数组进行便捷合并，而不需要使用上述方式
+  - indexOf(searchElement, fromIndex):从数组中查找 searchElement 对应的下标，如果没有对应元素，则返回 -1; fromIndex 参数可选，规定开始查找的位置
+    > > 数组的 indexOf 使用严格相等(===)进行匹配，必须要匹配完数组的所有元素才能得到结果
+    > > indexOf 不能识别 NaN
+    > > 使用场景:数组去重;根据获取的数组下标对于值进行操作;判断对应值是否存在，进行对应的操作
+  - lastIndexOf(searchElement，fromIndex):从后向前进行查找，查找这个元素对应的下标
+    > > fromIndex:正值(如果大于数组长度，则查找整个数组);负值(从后向前查找，如果绝对值大于数组长度，则返回-1，整个数组都不会被查找)
+  - includes(searchElement，fromIndex):检测数组中是否包含当前元素，返回 boolean;fromIndex 表示开始查找的位置，如果大于数组长度，则不会被查找
+    > > 区别 indexOf 和 includes:includes 是为了弥补 indexOf 的方法缺陷而产生的;indexOf 不能识别 NaN;indexOf 不够语义化，需要判断返回值结果是否为-1,而 includes 直接返回对应的布尔值,语义化较强
 - 数组的遍历方法(12 个)
+
   > > forEach()、every()、some()、filter()、map()、reduce()、reduceRight()、find()、findIndex()、keys()、values()、entries()、
-  - forEach()
-  - every()
-  - some()
-  - filter()
-  - map()
-  - reduce()
-  - reduceRight()
-  - find()
-  - findIndex()
+
+  - forEach((item,index,array)=>{}):按照升序遍历数组中各个元素(含有效值的元素,不操作空值)，并对于每个元素执行一边回调函数的操作
+    1. 对于空数组是不会执行回调函数的
+    2. 对于已在迭代过程中删除的元素，或者空元素会跳过回调函数
+    3. 遍历次数再第一次循环前就会确定，再添加到数组中的元素不会被遍历。
+    4. 如果已经存在的值被改变，则传递给 callback 的值是遍历到他们那一刻的值。
+    5. forEach 也可以为内部函数绑定 this 对象，作为第四个参数，默认值为 undefined
+    6. forEach 无法中止循环，return 无法中止当前循环,只能 return 本次回调，执行下一次回调;
+    7. 每次回调都是返回 undefined，即使通过 return 返回了一个值
+  - every((item,index,array)=>{}):遍历数组中的各个元素，判断数组中每个元素是否都满足回调函数对应的条件，如果都满足，则返回 true，如果有一个不满足，则返回 false
+    1. 同样可以传入第四个参数，指定当前回调函数内部的 this 指向;
+  - some((item,index,array)=>{}):数组中是否有值可以满足回调函数对应的条件,同样可以传递进入对应的 this 值作为回调函数的 this 指向,如果有一个满足的元素，就返回 true
+  - filter(()=>{}):过滤原始数组，返回满足条件的元素，同样可以绑定 this 对象
+  - map(()=>{}):遍历数组中的所有元素，对于数组中的每个元素都进行对应的操作，返回一个新数组，同样可以绑定 this 对象
+  - reduce((total,currentValue,index,array)=>{},initValue):对累加器(initvalue)和数组中每个元素都执行回调函数的操作，最终合并为一个值
+    1. 如果 initialValue 在调用 reduce 时被提供，那么第一个 total 将等于 initialValue，此时 currentValue 等于数组中的第一个值；
+    2. 如果 initialValue 未被提供，那么 total 等于数组中的第一个值，currentValue 等于数组中的第二个值。此时如果数组为空，那么将抛出 TypeError。
+    3. 如果数组仅有一个元素，并且没有提供 initialValue，或提供了 initialValue 但数组为空，那么回调不会被执行，数组的唯一值将被返回。
+  - reduceRight(()=>{},initValue):与 reduce 方向相反，其余完全相同
+  - find((currentValue,index,array)=>{}):找到数组中满足条件的第一个元素，并返回该元素，如果没有符合条件的元素，则返回 undefined
+  - findIndex((currentValue,index,array)=>{}):找到数组中满足条件的第一个元素，并返回该元素对应的下标，如果没有符合条件的元素，则返回-1
   - keys()
   - values()
-  - entries()
+  - entries():上述三个方法都返回一个 Array Iterator 对象，根据方法的不同返回不同的值，key 方法返回对应的下标值，value 返回对应的元素值，entries 返回对应的数组
+  - for..of:中途退出，使用 break 进行退出
+
+  ```typescript
+  // 可以手动调用遍历器对象的next方法，进行遍历
+  const letter = [1, 2, 3];
+  letter.next().value; // [0,'1']
+  letter.next().value; // [1,'2']
+  letter.next().value; // [2,'3']
+  ```
 
 ### 数组方法对应的功能
 

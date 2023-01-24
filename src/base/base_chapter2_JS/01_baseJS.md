@@ -82,7 +82,7 @@
     > > 区别 indexOf 和 includes:includes 是为了弥补 indexOf 的方法缺陷而产生的;indexOf 不能识别 NaN;indexOf 不够语义化，需要判断返回值结果是否为-1,而 includes 直接返回对应的布尔值,语义化较强
 - 数组的遍历方法(12 个)
 
-  > > forEach()、every()、some()、filter()、map()、reduce()、reduceRight()、find()、findIndex()、keys()、values()、entries()、
+  > > forEach()、every()、some()、filter()、map()、reduce()、reduceRight()、find()、findIndex()、findLast()、findLastIndex()、keys()、values()、entries()、
 
   - forEach((item,index,array)=>{}):按照升序遍历数组中各个元素(含有效值的元素,不操作空值)，并对于每个元素执行一边回调函数的操作
     1. 对于空数组是不会执行回调函数的
@@ -104,6 +104,7 @@
   - reduceRight(()=>{},initValue):与 reduce 方向相反，其余完全相同
   - find((currentValue,index,array)=>{}):找到数组中满足条件的第一个元素，并返回该元素，如果没有符合条件的元素，则返回 undefined
   - findIndex((currentValue,index,array)=>{}):找到数组中满足条件的第一个元素，并返回该元素对应的下标，如果没有符合条件的元素，则返回-1
+  - findLast 和 findLastIndex 与 find 的区别仅在于查找起点和超找方向的不同，fiindLast 是从后向前查找
   - keys()
   - values()
   - entries():上述三个方法都返回一个 Array Iterator 对象，根据方法的不同返回不同的值，key 方法返回对应的下标值，value 返回对应的元素值，entries 返回对应的数组
@@ -116,6 +117,30 @@
   letter.next().value; // [1,'2']
   letter.next().value; // [2,'3']
   ```
+
+- 新的实例方法(9 个)
+  > > flat()、flatMap()、at()、toReversed()、toSorted()、toSpliced()、with()、group()、groupToMap()
+  - flat(number):扁平化数组，number 默认值为 1，会自动跳过空元素,不修改原数组，会对应返回一个新数组
+  - flatMap(()=>{}):对于数组中的每个元素执行一次当前的回调函数，相当于数组的 map 方法，同时对于返回的新数组执行一次 flat 方法，该方法只能展开一层数组，该方法同样接受 this 参数
+  - at(int):接受一个整数作为参数，返回对应位置的成员，并支持负索引。这个方法不仅可用于数组，也可用于字符串和类型数组，如果参数超过了数组长度，则会返回 undefined
+  - group((currentItem,index,array)=>{}):根据分组函数执行的结果，将数组成员进行分组
+  ```javascript
+  const array = [1, 2, 3, 4, 5];
+  const odd = { odd: true };
+  const even = { even: true };
+  array.group((num, index, array) => {
+    return num % 2 === 0 ? even : odd;
+  });
+  //  Map { {odd: true}: [1, 3, 5], {even: true}: [2, 4] }
+  ```
+  - groupToMap():该方法与 group 方法完全一致，唯一的区别是 group 方法返回一个数组，给方法返回一个 map 对象，map 对象可以使用任意数据类型作为键名，所以不会最后的分组结果返回的是什么都会被作为分组组名
+- 替换的实例方法(尚在提案中)
+  > > 很多数组的传统方法会改变原数组，比如 push()、pop()、shift()、unshift()等等。数组只要调用了这些方法，它的值就变了。现在有一个提案，允许对数组进行操作时，不改变原数组，而返回一个原数组的拷贝。
+  - toReversed():对应 reverse，用来颠倒数组中的元素顺序
+  - toSorted(()=>{}):对应 sort，用来对于数组中的元素进行排序
+  - toSpliced(start,deleteCount,...items):对于 splice，用来在指定位置，删除指定数量的成员，并插入新成员
+  - with(index,value) === splice(index,1,value):对应 splice，用来将指定位置的成员替换为新值
+    > > 上述四个方法对应原有的方法，含义和用法完全一样，唯一不同的是不会改变原数组，而是返回原数组操作后的拷贝
 
 ### 数组方法对应的功能
 

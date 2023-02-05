@@ -1,5 +1,7 @@
 # Chapter 1 MarkDow 语法学习
 
+[错误分析](https://blog.csdn.net/zhangzhikang_zzk/article/details/118999012,'错误分析')
+
 ## 标题语法
 
     #### 对应的就是#,一个一级到六级,逐层递加
@@ -125,6 +127,7 @@ const emptyArray = [];
 ## 对齐方式
 
 <center>居中对齐<center />
+
 <p align='left'>左对齐<p />
 <p align='right'>左对齐<p />
 
